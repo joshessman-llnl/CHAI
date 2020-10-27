@@ -68,7 +68,10 @@ class Chai(CMakePackage, CudaPackage):
 
     variant('shared', default=True, description='Build Shared Libs')
     variant('raja', default=False, description='Build plugin for RAJA')
-    variant('tests', default='basic', values=('none', 'basic', 'benchmarks'),
+
+    # Note: Tests are either built if variant is set, or if run-tests option
+    # is passed
+    variant('tests', default='none', values=('none', 'basic', 'benchmarks'),
             multi=False, description='Tests to run')
 
     depends_on('cmake@3.8:', type='build')
@@ -216,10 +219,8 @@ class Chai(CMakePackage, CudaPackage):
 
             if not spec.satisfies('cuda_arch=none'):
                 cuda_arch = spec.variants['cuda_arch'].value
-                cuda_arch = "sm_{0}".format(cuda_arch[0])
-                flag = '-arch {0}'.format(cuda_arch)
-                cfg.write(cmake_cache_string("CUDA_ARCH",cuda_arch))
-                cfg.write(cmake_cache_string("CMAKE_CUDA_FLAGS", flag))
+                cuda_flag = '-arch sm_{0}'.format(cuda_arch[0])
+                cfg.write(cmake_cache_string("CMAKE_CUDA_FLAGS", cuda_flag))
 
         else:
             cfg.write(cmake_cache_option("ENABLE_CUDA", False))
@@ -241,8 +242,10 @@ class Chai(CMakePackage, CudaPackage):
         umpire_conf_path = spec['umpire'].prefix + "/share/umpire/cmake"
         cfg.write(cmake_cache_entry("umpire_DIR",umpire_conf_path))
 
+        # Note: Tests are either built if variant is set, or if run-tests
+        # option is passed.
         cfg.write(cmake_cache_option("ENABLE_BENCHMARKS", 'tests=benchmarks' in spec))
-        cfg.write(cmake_cache_option("ENABLE_TESTS", not 'tests=none' in spec))
+        cfg.write(cmake_cache_option("ENABLE_TESTS", not 'tests=none' in spec or self.run_tests))
 
         #######################
         # Close and save
