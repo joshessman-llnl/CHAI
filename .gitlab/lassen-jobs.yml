@@ -10,57 +10,57 @@
 
 clang_default (build and test on lassen):
   variables:
-    SPEC: "test=basic %clang@default"
+    SPEC: " test=basic %clang@default"
   extends: .build_and_test_on_lassen
 
 gcc_default (build and test on lassen):
   variables:
-    SPEC: "test=basic %gcc@default"
+    SPEC: " test=basic %gcc@default"
   extends: .build_and_test_on_lassen
 
 xl_default (build and test on lassen):
   variables:
-    SPEC: "test=basic %xl@default"
+    SPEC: " test=basic %xl@default"
   extends: .build_and_test_on_lassen
 
 pgi_default (build and test on lassen):
   variables:
-    SPEC: "test=basic %pgi@default"
+    SPEC: " test=basic %pgi@default"
   extends: .build_and_test_on_lassen
   allow_failure: true
 
 gcc_8_3_1 (build and test on lassen):
   variables:
-    SPEC: "test=basic %gcc@8.3.1"
+    SPEC: " test=basic %gcc@8.3.1"
   extends: .build_and_test_on_lassen
 
 clang_3_9_1 (build and test on lassen):
   variables:
-    SPEC: "test=basic %clang@3.9.1"
+    SPEC: " test=basic %clang@3.9.1"
   extends: .build_and_test_on_lassen_advanced
 
 clang_4_0_0 (build and test on lassen):
   variables:
-    SPEC: "test=basic %clang@4.0.0"
+    SPEC: " test=basic %clang@4.0.0"
   extends: .build_and_test_on_lassen_advanced
 
 clang_9_0_0 (build and test on lassen):
   variables:
-    SPEC: "test=basic %clang@9.0.0"
+    SPEC: " test=basic %clang@9.0.0"
   extends: .build_and_test_on_lassen
 
 nvcc_gcc_4_9_3 (build and test on lassen):
   variables:
-    SPEC: "test=basic %gcc@4.9.3+cuda"
+    SPEC: "+cuda test=basic %gcc@4.9.3"
   extends: .build_and_test_on_lassen
 
 nvcc_gcc_4_9_3_raja (build and test on lassen):
   variables:
-    SPEC: "test=basic %gcc@4.9.3+cuda+raja"
+    SPEC: "+cuda+raja test=basic %gcc@4.9.3"
   extends: .build_and_test_on_lassen
   allow_failure: true
 
 nvcc_xl-beta-2019.06.20 (build and test on lassen):
   variables:
-    SPEC: "test=basic %xl@beta2019.06.20+cuda"
+    SPEC: "+cuda test=basic %xl@beta2019.06.20"
   extends: .build_and_test_on_lassen
